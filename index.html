@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Polaroid Collective</title>
+    <title>Stadium Drive</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <!-- Google tag (gtag.js) -->
@@ -16,6 +16,39 @@
 
   gtag('config', 'G-TX0PHSRV9P');
 </script>
+<!-- Add this before </body> -->
+<script>
+const calendarId = 'broncoBro01@gmail.com';
+const apiKey = 'AIzaSyA8uJ4YMRNkUNAEKrdVhySjzutGcmbEK6g'; // Replace with your API key
+const maxResults = 5; // Number of events to show
+
+fetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?key=${apiKey}&orderBy=startTime&singleEvents=true&timeMin=${(new Date()).toISOString()}&maxResults=${maxResults}`)
+  .then(response => response.json())
+  .then(data => {
+    const eventList = document.getElementById('event-list');
+    if (!data.items || data.items.length === 0) {
+      eventList.innerHTML = '<p>No upcoming events.</p>';
+      return;
+    }
+    eventList.innerHTML = data.items.map(event => {
+  const start = event.start.dateTime || event.start.date;
+  const date = new Date(start).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+  return `
+    <div class="event">
+      <div class="event-header">
+        <span class="event-title">${event.summary || ''}:</span>
+        <span class="event-date"> ${date}</span>
+      </div>
+      <div class="event-desc">${event.description || ''}</div>
+    </div>
+  `;
+}).join('');
+  })
+  .catch(err => {
+    document.getElementById('event-list').innerHTML = '<p>Could not load events.</p>';
+    console.error(err);
+  });
+</script>
 <body>
     <header>
         <div class="navbar">
@@ -24,57 +57,56 @@
                     &#9776; <!-- Hamburger icon -->
                 </div>
                 <ul class="navElements" id="menuList">
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#shows">Upcoming Events</a></li>
-                    <li><a href="#merch" class="coming-soon">Merch</a></li>
-                    <li><a href="#music">Music</a></li>
+                    <li><a href="#albums">Our Music</a></li>
+                    <li><a href="#shows">Upcoming Shows</a></li>
                 </ul>
                 <ul class="navSocials">
-                    <li><a href="https://www.instagram.com/thepolaroidcollectiveband/" target="_blank"><img src="images/SocialMediaLogos/InstaLogo.png" alt="Instagram page" width="45px" height="auto"></a></li>
-                    <li><a href="https://www.tiktok.com/itsthepolaroidcollective/" target="_blank"><img src="images/SocialMediaLogos/TikTokLogo.png" alt="TikTok page" width="45px" height="auto"></a></li>
-                    <li><a href="https://www.youtube.com/@thepolaroidcollectiveband" target="_blank"><img src="images/SocialMediaLogos/YTlogo.png" alt="Youtube Channel" width="52px" height="auto"></a></li>
-                    <!--<li><a href="https://www.facebook.com" target="_blank"><img src="images/SocialMediaLogos/FBlogo.png" alt="Facebook page" width="55px" height="auto"></a></li>-->
-                    <!--<li><a href="https://music.apple.com/us/new" target="_blank"><img src="images/MusicLogos/itunes.png" alt="Apple Music/iTunes" width="50px" height="auto"></a></li>-->
-                    <!--<li><a href="https://open.spotify.com" target="_blank"><img src="images/MusicLogos/spotify.png" alt="Spotify" width="50px" height="auto"></a></li>-->
-                    <li><a href="mailto:thepolaroidcollectiveband@gmail.com"><img src="images/SocialMediaLogos/envelope.png" alt="Email" width="50px" height="auto"></a></li>
+                    <li><a href="https://www.instagram.com/officialstadiumdrive/?hl=en" target="_blank"><img src="images/SocialMediaLogos/InstaLogo.png" alt="Instagram page" width="45px" height="auto"></a></li>
+                    <li><a href="https://www.tiktok.com/@stadium_drive" target="_blank"><img src="images/SocialMediaLogos/TikTokLogo.png" alt="TikTok page" width="45px" height="auto"></a></li>
+                    <li><a href="https://www.youtube.com/@stadium_drive/videos" target="_blank"><img src="images/SocialMediaLogos/YTlogo.png" alt="Youtube Channel" width="52px" height="auto"></a></li>
+                    <li><a href="https://www.facebook.com/stadiumdrive04" target="_blank"><img src="images/SocialMediaLogos/FBlogo.png" alt="Facebook page" width="55px" height="auto"></a></li>
+                    <li><a href="https://music.apple.com/us/artist/stadium-drive/1570560863" target="_blank"><img src="images/MusicLogos/itunes.png" alt="Apple Music/iTunes" width="50px" height="auto"></a></li>
+                    <li><a href="https://open.spotify.com/artist/0pCTpWgIWhkZcGUnkydM3n?si=2_Bp8awHR0qkRdXFCNqGfw" target="_blank"><img src="images/MusicLogos/spotify.png" alt="Spotify" width="50px" height="auto"></a></li>
+                    <li><a href="mailto:stadiumdrive2@gmail.com"><img src="images/SocialMediaLogos/envelope.png" alt="Email" width="50px" height="auto"></a></li>
                 </ul>
             </nav>
         </div>
     </header>
     <main>
-        <div class= "middleSection">
-            <h1 class="largeText">THE POLAROID <br> COLLECTIVE</h1>
-            <video class = "montageVideo" autoplay loop muted src="videos/Montage.mov"></video>
-        </div>
-        <div id="about"></div>
+        <div class="middleSection">
+            <img src="images/logo.jpg" alt="Stadium Drive Logo" class="logoImg" width="400" height="400" style="object-fit:contain;">
             <div class="whoareWe">
                 <h2 class="sectionTitle"> WHO ARE WE?</h2>
-                <p>The Polaroid Collective is an indie rock band from Jacksonville, AL that was formed in 2023. Reach out via <a href="mailto:thepolaroidcollectiveband@gmail.com">e&#8209;mail</a> for booking and gigs!</p>
-            </div>
-
-        <div class="members">
-            <div class="gallery">
-                <a href="https://www.instagram.com/thepolaroidcollectiveband/" target="_blank">
-                    <img src="images/TPC-polaroid.JPG" class="adjustImg" alt="TPC polaroid">
-                </a>
-                <a href="https://www.instagram.com/digi.04/" target="_blank">
-                    <img src="images/digi-polaroid.jpg" alt="digi">
-                </a>
-                <a href="https://www.instagram.com/drummerjack03/" target="_blank">
-                    <img src="images/jack-polaroid.jpg" alt="jack">
-                </a>
-                <a href="https://www.instagram.com/b.i.g_cam/" target="_blank">
-                    <img src="images/cam-polaroid.jpg" alt="cam">
-                </a>
-                <a href="https://www.instagram.com/canyon_wat/" target="_blank">
-                    <img src="images/canyon-polaroid.jpg" class="adjustImg" alt="canyon">
-                </a>
+                <p>Stadium Drive is an energetic rock band from Alabama, formed in 2017.</p>
             </div>
         </div>
+
+        <div class="albums">
+        <h2 class="sectionTitle">OUR MUSIC</h2>
+        <div class="album-gallery">
+            <a href="https://www.youtube.com/watch?v=zC6uN5bVNos&list=OLAK5uy_mUKScTOhqbbbUjHowA1XPdLJYlW-dX2eU target=" target="_blank" rel="noopener noreferrer">
+                <img src="images/BombsA.jpg" alt="Bombs Away!">
+            </a>
+            <a href="https://www.youtube.com/watch?v=HSq112shIyM&list=OLAK5uy_mJugAccInf6hExDqNGYgsDQ_MWN83vADQ" target="_blank" rel="noopener noreferrer">
+                <img src="images/TheDrive.jpg" alt="The Drive">
+            </a>
+            <a href="https://www.youtube.com/watch?v=uGq7gjoQ1e8&list=OLAK5uy_koGJTgyZnBMHpnlvzceMWyDvKCwyiOdpU" target="_blank" rel="noopener noreferrer">
+                <img src="images/Runaway.jpg" alt="Runaway">
+            </a>
+            <a href="https://www.youtube.com/watch?v=j64T_VNrv00&list=OLAK5uy_nH6AtDye_gTEmWRZokjq_qzoKzr9zzACs" target="_blank" rel="noopener noreferrer">
+                <img src="images/JumpTheGun.jpg" alt="Jump The Gun">
+            </a>
+            <a href="https://www.youtube.com/watch?v=MKphzPQe7MQ&list=OLAK5uy_kJaYkk5fvkMkbSIIEztsvHze6kSSOCG-k" target="_blank" rel="noopener noreferrer">
+                <img src="images/StCrnrGirls.jpg" alt="Strett Corner Girls">
+            </a>
+        </div>
+    </div>
         
 
         <div id="shows">
             <h2 class="sectionTitle">UPCOMING SHOWS</h2>
+            <div id="event-list"></div>
+        </div>
             
             <!--<a href="https://www.instagram.com/p/DBbZzS9sd2g/?igsh=bnQwNWttZnR1a2Vz" class="event" target="_blank">
                 <div class="lSide">
@@ -97,7 +129,7 @@
                 </div>
             </a>
             </a>-->
-            <container class="event">
+            <!--<container class="event">
                 <div class="lSide">
                     <p class="month">MAR</p>
                     <p class="day">7</p>
@@ -106,58 +138,65 @@
                     <p class="eventType">The Dragon's Roast</p>
                     <p class="eventTitle">Chattanooga, TN @ 6:30pm EST</p>
                 </div>
-            </container>
-        </div>
+            </container>-->
 
-
-        <!-- <div id="merch">
-            <h2 class="sectionTitle">MERCH:</h2>
-            <p>Want to support the band? Merchandise is avaliable via CustomInk, stay tuned for future updates on Merchandise from The Polaroid Collective!</p>
-            <ul class="shirts">
-                <li><a href="https://www.customink.com/designs/tpcshirt/tda0-00cw-yg4f/share?pc=EMAIL-40778&utm_campaign=shared%20design&utm_source=share%20link&utm_medium=shared%20design&utm_content=shared%20desktop" target="_blank"><img src="images/TPCshirt.png" alt="t shirt" width="250px" height="auto"></a></li>
-                <li><a href="https://www.customink.com/designs/tpcshirt2/tda0-00cw-zpjv/share?pc=EMAIL-40778&utm_campaign=shared%20design&utm_source=share%20link&utm_medium=shared%20design&utm_content=shared%20desktop" target="_blank"><img src="images/tpcshirt2.png" alt="t shirt" width="250px" height="auto"></a></li>
-            </ul>
-        -->
-
-        <div id="music">
-            <h2 class="sectionTitle">MUSIC</h2></a>
+        <!-- Add this just before the closing </main> or above <footer> -->
+    <div class="video-section">
+        <h2 class="sectionTitle">PAST PERFORMANCES</h2>
+        <div class="video-gallery">
             <iframe 
-                width="40%" 
-                height="315" 
-                src="https://www.youtube.com/embed/a-J-JsjhAkE" 
-                title="YouTube video player" 
+                width="350" 
+                height="197" 
+                src="https://www.youtube.com/embed/lVDxo-JPirY" 
+                title="YouTube video player 2" 
                 frameborder="0"
-                style="margin-bottom: 20px;"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                referrerpolicy="strict-origin-when-cross-origin" 
                 allowfullscreen>
             </iframe>
             <iframe 
-                width="40%"
-                height="315"
-                src="https://www.youtube.com/embed/m_36rz19OZw?si=c9Lr0GDqI3r4fkRx"
-                title="YouTube video player"
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
+                width="350" 
+                height="197" 
+                src="https://www.youtube.com/embed/v67_VpwAsQg" 
+                title="YouTube video player 2" 
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                 allowfullscreen>
             </iframe>
+            <iframe 
+                width="350" 
+                height="197" 
+                src="https://www.youtube.com/embed/fNk5XNN0KM0" 
+                title="YouTube video player 2" 
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen>
+            </iframe>
+            <iframe 
+                width="350" 
+                height="197" 
+                src="https://www.youtube.com/embed/lGXzRTzn5Gg" 
+                title="YouTube video player 1" 
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen>
+            </iframe>
+            <!-- Add more iframes as needed -->
         </div>
+    </div>
         
     </main>
 
     <footer>
             <ul class="footSocials">
-                <li><a href="https://www.instagram.com/thepolaroidcollectiveband/"><img src="images/SocialMediaLogos/InstaLogo.png" alt="Instagram" width="20px" height="auto"></a></li>
-                <li><a href="https://www.tiktok.com/@itsthepolaroidcollective"><img src="images/SocialMediaLogos/TikTokLogo.png" alt="TikTok page" width="20px" height="auto"></a></li>
-                <li><a href="https://www.youtube.com/@thepolaroidcollectiveband"><img src="images/SocialMediaLogos/YTlogo.png" alt="Youtube channel" width="25px" height="auto"></a></li>
-                <!--<li><a href="https://www.facebook.com"><img src="images/SocialMediaLogos/FBlogo.png" alt="facebook" width="20px" height="auto"></a></li>-->
-                <!--<li><a href="https://www.apple.com/apple-music/"><img src="images/MusicLogos/itunes.png" alt="Apple Music/iTunes" width="20px" height="auto"></a></li>-->
-                <!--<li><a href="https://www.spotify.com/us/premium/"><img src="images/MusicLogos/spotify.png" alt="Spotify" width="20px" height="auto"></a></li>-->
-                <li><a href="mailto:thepolaroidcollectiveband@gmail.com"><img src="images/SocialMediaLogos/envelope.png" alt="Email" width="20px" height="auto"></a></li>
-
-            </ul>
-        <p class="copyRight">&copy; 2023-2025 The Polaroid Collective. All rights reserved.</p>
+                <li><a href="https://www.instagram.com/officialstadiumdrive/?hl=en" target="_blank"><img src="images/SocialMediaLogos/InstaLogo.png" alt="Instagram page" width="20px" height="auto"></a></li>
+                    <li><a href="https://www.tiktok.com/@stadium_drive" target="_blank"><img src="images/SocialMediaLogos/TikTokLogo.png" alt="TikTok page" width="20px" height="auto"></a></li>
+                    <li><a href="https://www.youtube.com/@stadium_drive/videos" target="_blank"><img src="images/SocialMediaLogos/YTlogo.png" alt="Youtube Channel" width="25px" height="auto"></a></li>
+                <li><a href="https://www.facebook.com/stadiumdrive04" target="_blank"><img src="images/SocialMediaLogos/FBlogo.png" alt="Facebook page" width="20px" height="auto"></a></li>
+                <li><a href="https://music.apple.com/us/artist/stadium-drive/1570560863" target="_blank"><img src="images/MusicLogos/itunes.png" alt="Apple Music/iTunes" width="20px" height="auto"></a></li>
+                <li><a href="https://open.spotify.com/artist/0pCTpWgIWhkZcGUnkydM3n?si=2_Bp8awHR0qkRdXFCNqGfw" target="_blank"><img src="images/MusicLogos/spotify.png" alt="Spotify" width="20px" height="auto"></a></li>
+                <li><a href="mailto:stadiumdrive2@gmail.com"><img src="images/SocialMediaLogos/envelope.png" alt="Email" width="20px" height="auto"></a></li>
+        </ul>
+        <p class="copyRight">&copy; 2025 Stadium Drive. All rights reserved.</p>
 
         
     </footer>
